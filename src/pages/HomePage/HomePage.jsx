@@ -20,7 +20,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false)
   const [limit, setLimit] = useState(6)
   const [typeProducts, setTypeProducts] = useState([])
-  
+
   const fetchProductAll = async (context) => {
     const limit = context?.queryKey && context?.queryKey[1]
     const search = context?.queryKey && context?.queryKey[2]
@@ -32,7 +32,7 @@ const HomePage = () => {
 
   const fetchAllTypeProduct = async () => {
     const res = await ProductService.getAllTypeProduct()
-    if(res?.status === 'OK') {
+    if (res?.status === 'OK') {
       setTypeProducts(res?.data)
     }
   }
@@ -49,7 +49,7 @@ const HomePage = () => {
         <WrapperTypeProduct>
           {typeProducts.map((item) => {
             return (
-              <TypeProduct name={item} key={item}/>
+              <TypeProduct name={item} key={item} />
             )
           })}
         </WrapperTypeProduct>
