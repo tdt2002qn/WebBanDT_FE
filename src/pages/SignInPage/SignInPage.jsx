@@ -36,7 +36,7 @@ const SignInPage = () => {
         message.success()
       } else {
         navigate('/')
-        message.error()
+
       }
       localStorage.setItem('access_token', JSON.stringify(data?.access_token))
       localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token))

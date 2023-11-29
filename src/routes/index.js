@@ -1,4 +1,5 @@
 import AdminPage from "../pages/AdminPage/AdminPage";
+import ChatPage from "../pages/ChatPage/ChatPage";
 import DetailsOrderPage from "../pages/DetailsOrderPage/DetailsOrderPage";
 import HomePage from "../pages/HomePage/HomePage";
 import MyOrderPage from "../pages/MyOrder/MyOrder";
@@ -79,6 +80,11 @@ export const routes = [
         page: AdminPage,
         isShowHeader: false,
         isPrivated: true
+    },
+    {
+        path: '/chatpage',
+        page: ChatPage,
+        isShowHeader: true
     },
     {
         path: '*',

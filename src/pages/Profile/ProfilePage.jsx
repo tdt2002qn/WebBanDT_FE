@@ -11,7 +11,7 @@ import Loading from '../../components/LoadingComponent/Loading'
 import * as message from '../../components/Message/Message'
 import { updateUser } from '../../redux/slides/userSlide'
 import { Button, Upload } from 'antd'
-import { UploadOutlined} from '@ant-design/icons'
+import { UploadOutlined } from '@ant-design/icons'
 import { getBase64 } from '../../utils'
 
 const ProfilePage = () => {
@@ -66,10 +66,10 @@ const ProfilePage = () => {
         setAddress(value)
     }
 
-    const handleOnchangeAvatar = async ({fileList}) => {
+    const handleOnchangeAvatar = async ({ fileList }) => {
         const file = fileList[0]
         if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj );
+            file.preview = await getBase64(file.originFileObj);
         }
         setAvatar(file.preview)
     }
@@ -80,7 +80,7 @@ const ProfilePage = () => {
     }
     return (
         <div style={{ width: '1270px', margin: '0 auto', height: '500px' }}>
-            <WrapperHeader>Thông tin người dùng</WrapperHeader>
+            <WrapperHeader>Trang cá nhân</WrapperHeader>
             <Loading isLoading={isLoading}>
                 <WrapperContentProfile>
                     <WrapperInput>
@@ -142,7 +142,7 @@ const ProfilePage = () => {
                                 width: '60px',
                                 borderRadius: '50%',
                                 objectFit: 'cover'
-                            }} alt="avatar"/>
+                            }} alt="avatar" />
                         )}
                         {/* <InputForm style={{ width: '300px' }} id="avatar" value={avatar} onChange={handleOnchangeAvatar} /> */}
                         <ButtonComponent

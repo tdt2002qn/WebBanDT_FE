@@ -4,7 +4,8 @@ import { WrapperContentPopup, WrapperHeader, WrapperHeaderAccout, WrapperTextHea
 import {
   UserOutlined,
   CaretDownOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  WechatOutlined
 } from '@ant-design/icons';
 import ButttonInputSearch from '../ButtonInputSearch/ButttonInputSearch';
 import { useNavigate } from 'react-router-dom';
@@ -33,9 +34,11 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
   const handleLogout = async () => {
     setLoading(true)
+
     await UserService.logoutUser()
     dispatch(resetUser())
     setLoading(false)
+    localStorage.removeItem("access_token")
   }
 
   useEffect(() => {
@@ -47,7 +50,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
   const content = (
     <div>
-      <WrapperContentPopup onClick={() => handleClickNavigate('profile')}>Thông tin người dùng</WrapperContentPopup>
+      <WrapperContentPopup onClick={() => handleClickNavigate('profile')}>Trang cá nhân</WrapperContentPopup>
       {user?.isAdmin && (
 
         <WrapperContentPopup onClick={() => handleClickNavigate('admin')}>Quản lí hệ thống</WrapperContentPopup>
@@ -87,7 +90,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
           <WrapperTextHeader to='/'>Trang chủ</WrapperTextHeader>
         </Col>
         {!isHiddenSearch && (
-          <Col span={13}>
+          <Col span={10}>
             <ButttonInputSearch
               size="large"
               bordered={false}
@@ -98,7 +101,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
             />
           </Col>
         )}
-        <Col span={6} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
+        <Col span={9} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
           <Loading isLoading={loading}>
             <WrapperHeaderAccout>
               {userAvatar ? (
@@ -135,7 +138,15 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
               </Badge>
               <WrapperTextHeaderSmall>Giỏ hàng</WrapperTextHeaderSmall>
             </div>
+
           )}
+          <span>
+            <div onClick={() => navigate('/chatpage')} style={{ cursor: 'pointer' }}>
+              <WechatOutlined style={{ fontSize: '30px', color: '#fff' }} />
+              <WrapperTextHeaderSmall>Hổ trợ</WrapperTextHeaderSmall>
+            </div>
+
+          </span>
         </Col>
       </WrapperHeader>
     </div>
