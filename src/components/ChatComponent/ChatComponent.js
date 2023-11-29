@@ -72,7 +72,8 @@ const ChatComponent = () => {
     <ChatContainer>
       {messages.map((msg, index) => (
         <Message key={index} sender={msg.sender}>
-          {msg.text}
+
+          Guess: {msg.text}
         </Message>
       ))}
       <InputContainer>
