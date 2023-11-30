@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import ProductDetailsComponent from '../../components/ProductDetailsComponent/ProductDetailsComponent'
-import { io } from 'socket.io-client'
 
 
-const socket = io('/', {
-  reconnection: true
-})
+
 const ProductDetailsPage = () => {
   useEffect(() => {
-    console.log('SOCKET IO', socket);
+
   }, [])
 
   const { id } = useParams()

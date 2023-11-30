@@ -16,8 +16,9 @@ import { useState } from 'react';
 import Loading from '../LoadingComponent/Loading';
 import { useEffect } from 'react';
 import { searchProduct } from '../../redux/slides/productSlide';
-
-
+import socket from '../../services/socket';
+import CustomModal from './CustomModal';
+import ModalWrapper from './CustomModalWrapper';
 const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   const navigate = useNavigate()
   const user = useSelector((state) => state.user)
@@ -28,13 +29,17 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   const [isOpenPopup, setIsOpenPopup] = useState(false)
   const order = useSelector((state) => state.order)
   const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState('');
+  // Thuộc thông báo socket, phần đăng xuat
+  const [modalMessage, setModalMessage] = useState('');
+  const [showModal, setShowModal] = useState(true);
   const handleNavigateLogin = () => {
     navigate('/sign-in')
   }
-
   const handleLogout = async () => {
-    setLoading(true)
 
+
+    setLoading(true)
     await UserService.logoutUser()
     dispatch(resetUser())
     setLoading(false)
@@ -48,6 +53,22 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
     setLoading(false)
   }, [user?.name, user?.avatar])
 
+  //Phần của SOCKET thông báo đăng xuất
+  useEffect(() => {
+    // Lắng nghe sự kiện đăng xuat thành công từ server
+    socket.on('logout_success', (data) => {
+      console.log('BYE OKKK', data?.message); // Log hoặc thực hiện hành động cần thiết
+      // Show the modal with the success message
+      setModalMessage(data?.message || 'Logout successful');
+
+    });
+
+    // Clean up socket event listener when component unmounts
+
+  }, []);
+  const closeModal = () => {
+    setShowModal(false);
+  };
   const content = (
     <div>
       <WrapperContentPopup onClick={() => handleClickNavigate('profile')}>Trang cá nhân</WrapperContentPopup>
@@ -73,7 +94,16 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
         }
       })
     } else {
-      handleLogout()
+      setShowModal(true);
+      console.log("Gui đăng xuat cho sever ne")
+      socket.emit('logout', 'hi');
+
+      {/* Container để hiển thị thông báo */ }
+
+      setTimeout(() => {
+        handleLogout()
+      }, 1000)
+
     }
     setIsOpenPopup(false)
   }
@@ -84,11 +114,14 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   }
 
   return (
+
     <div style={{ heiht: '100%', width: '100%', display: 'flex', background: '#FF0000', justifyContent: 'center' }}>
+
       <WrapperHeader style={{ justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset' }}>
         <Col span={5}>
           <WrapperTextHeader to='/'>Trang chủ</WrapperTextHeader>
         </Col>
+
         {!isHiddenSearch && (
           <Col span={10}>
             <ButttonInputSearch
@@ -149,7 +182,10 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
           </span>
         </Col>
       </WrapperHeader>
+      <ModalWrapper showModal={showModal} modalMessage={modalMessage} closeModal={closeModal} />
     </div>
+
+
   )
 }
 

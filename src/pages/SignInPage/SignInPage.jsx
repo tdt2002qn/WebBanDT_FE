@@ -14,14 +14,20 @@ import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from '../../redux/slides/userSlide'
 import * as message from '../../components/Message/Message'
+import socket from '../../services/socket'
+
+import CustomModal from './CustomModal'
 const SignInPage = () => {
   const [isShowPassword, setIsShowPassword] = useState(false)
   const location = useLocation()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  // Thuộc thông báo socket, phần đăng nhập
+  const [modalMessage, setModalMessage] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const user = useSelector((state) => state.user)
-
+  const [check, setCheck] = useState(false);
   const navigate = useNavigate()
 
   const mutation = useMutationHooks(
@@ -31,13 +37,15 @@ const SignInPage = () => {
 
   useEffect(() => {
     if (isSuccess && data && data.status === 'OK') {
-      if (location?.state) {
-        navigate(location?.state)
-        message.success()
-      } else {
-        navigate('/')
 
-      }
+      setTimeout(() => {
+        if (location?.state) {
+          // Pass the success state to the next page
+          navigate(location.state, { state: { loginSuccess: true } });
+        } else {
+          navigate('/', { state: { loginSuccess: true } });
+        }
+      }, 3000);
       localStorage.setItem('access_token', JSON.stringify(data?.access_token))
       localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token))
       if (data?.access_token) {
@@ -46,8 +54,25 @@ const SignInPage = () => {
           handleGetDetailsUser(decoded?.id, data?.access_token)
         }
       }
+      setShowModal(true);
+    } else {
+      setShowModal(false);
     }
   }, [isSuccess])
+
+  useEffect(() => {
+    // Lắng nghe sự kiện đăng nhập thành công từ server
+    socket.on('login_success', (data) => {
+      console.log('OKKKK', data?.message); // Log hoặc thực hiện hành động cần thiết
+
+      // Show the modal with the success message
+      setModalMessage(data?.message || 'Login successful');
+
+    });
+
+    // Clean up socket event listener when component unmounts
+
+  }, []);
 
   const handleGetDetailsUser = async (id, token) => {
     const storage = localStorage.getItem('refresh_token')
@@ -70,13 +95,22 @@ const SignInPage = () => {
   }
 
   const handleSignIn = () => {
-    console.log('logingloin')
+    console.log(email)
+    socket.emit('login', { email });
+    // // Lắng nghe sự kiện đăng nhập thành công từ server
+    // socket.on('login_success', (data) => {
+    //   console.log(data.message); // Log hoặc thực hiện hành động cần thiết
+    // });
+    // toast.success(data.message);
     mutation.mutate({
       email,
       password
     })
   }
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0, 0, 0, 0.53)', height: '100vh' }}>
       <div style={{ width: '800px', height: '445px', borderRadius: '6px', background: '#fff', display: 'flex' }}>
@@ -126,6 +160,8 @@ const SignInPage = () => {
               styleTextButton={{ color: '#fff', fontSize: '15px', fontWeight: '700' }}
             ></ButtonComponent>
           </Loading>
+          {/* Container để hiển thị thông báo */}
+          {showModal && <CustomModal message={modalMessage} onClose={closeModal} />}
           <p><WrapperTextLight>Quên mật khẩu?</WrapperTextLight></p>
           <p>Chưa có tài khoản? <WrapperTextLight onClick={handleNavigateSignUp}> Tạo tài khoản</WrapperTextLight></p>
         </WrapperContainerLeft>

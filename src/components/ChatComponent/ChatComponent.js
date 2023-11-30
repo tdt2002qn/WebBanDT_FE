@@ -1,9 +1,8 @@
 // ChatComponent.jsx
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
 import styled from 'styled-components';
-
-const socket = io('http://localhost:3000'); // Điều chỉnh URL tương ứng với server của bạn
+import socket from '../../services/socket';
+// Điều chỉnh URL tương ứng với server của bạn
 
 // Styled components
 const ChatContainer = styled.div`
@@ -55,13 +54,17 @@ const ChatComponent = () => {
   useEffect(() => {
     // Lắng nghe sự kiện khi có tin nhắn mới từ server
     socket.on('chat message', (msg) => {
-      setMessages([...messages, msg]);
-      console.log('messages', messages, msg)
+      setMessages(prevMessages => {
+        const newMessages = [...prevMessages, msg];
+        console.log('messages', newMessages, msg);
+        return newMessages;
+      });
     });
 
     // Ngắt kết nối khi component unmount
 
-  }, [messages]);
+  }, []); // Dependency array trống, chỉ chạy khi component mount/unmount
+
 
   const sendMessage = () => {
     socket.emit('chat message', { text: input, sender: 'user' });
@@ -73,7 +76,7 @@ const ChatComponent = () => {
       {messages.map((msg, index) => (
         <Message key={index} sender={msg.sender}>
 
-          Guess: {msg.text}
+          Guest : {msg.text}
         </Message>
       ))}
       <InputContainer>
