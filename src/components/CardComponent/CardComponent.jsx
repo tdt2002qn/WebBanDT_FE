@@ -4,12 +4,26 @@ import { StarFilled } from '@ant-design/icons'
 import logo from '../../assets/images/logo.png'
 import { useNavigate } from 'react-router-dom'
 import { convertPrice } from '../../utils'
-
+import { useMutationHooks } from '../../hooks/useMutationHook'
+import * as UserService from '../../services/UserService'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 const CardComponent = (props) => {
+    const user = useSelector((state) => state.user);
     const { countInStock, description, image, name, price, rating, type, discount, selled, id } = props
     const navigate = useNavigate()
     const handleDetailsProduct = (id) => {
-        navigate(`/product-details/${id}`)
+
+        // Nếu user đã đăng nhập, bạn có thể thực hiện hành động cần thiết ở đây
+        if (user?.access_token) {
+            navigate(`/product-details/${id}`)
+            console.log('ko')
+        } else {
+            navigate(`/sign-in`)
+            console.log('ok')
+        }
+
+
     }
     return (
         <WrapperCardStyle

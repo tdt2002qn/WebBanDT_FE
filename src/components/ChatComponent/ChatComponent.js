@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import socket from '../../services/socket';
+import { useSelector } from 'react-redux'
+
+
 // Điều chỉnh URL tương ứng với server của bạn
 
 // Styled components
@@ -47,6 +50,7 @@ const SendButton = styled.button`
 `;
 
 const ChatComponent = () => {
+  const user = useSelector((state) => state.user);
   const [messages, setMessages] = useState([]);
 
   const [input, setInput] = useState('');
@@ -56,7 +60,7 @@ const ChatComponent = () => {
     socket.on('chat message', (msg) => {
       setMessages(prevMessages => {
         const newMessages = [...prevMessages, msg];
-        console.log('messages', newMessages, msg);
+        //console.log('messages', newMessages, msg);
         return newMessages;
       });
     });
@@ -67,7 +71,7 @@ const ChatComponent = () => {
 
 
   const sendMessage = () => {
-    socket.emit('chat message', { text: input, sender: 'user' });
+    socket.emit('chat message', { text: input, sender: user?.email });
     setInput('');
   };
 
@@ -76,7 +80,8 @@ const ChatComponent = () => {
       {messages.map((msg, index) => (
         <Message key={index} sender={msg.sender}>
 
-          Guest : {msg.text}
+          User:  {msg.sender} <br />
+          Nội dung: {msg.text}
         </Message>
       ))}
       <InputContainer>
