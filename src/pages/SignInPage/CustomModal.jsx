@@ -34,8 +34,8 @@ const ModalWrapper = styled.div`
 const CustomModal = ({ message, onClose }) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      onClose();
-    }, 1000);
+
+    }, 10);
     // Adjust the duration as needed
 
     return () => clearTimeout(timeoutId); // Clean up the timeout when the component unmounts

@@ -5,7 +5,8 @@ import {
   UserOutlined,
   CaretDownOutlined,
   ShoppingCartOutlined,
-  WechatOutlined
+  WechatOutlined,
+  MoneyCollectOutlined
 } from '@ant-design/icons';
 import ButttonInputSearch from '../ButtonInputSearch/ButttonInputSearch';
 import { useNavigate } from 'react-router-dom';
@@ -180,6 +181,21 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
             </div>
 
           </span>
+          <span>
+            {user?.isAdmin ? (
+              <div onClick={() => navigate('/postnews')} style={{ cursor: 'pointer' }}>
+                <MoneyCollectOutlined style={{ fontSize: '30px', color: '#fff' }} />
+                <WrapperTextHeaderSmall>Đăng thông tin khuyến mãi</WrapperTextHeaderSmall>
+              </div>
+            ) : (
+              // Có thể thêm logic hoặc hiển thị gì đó khi không chuyển hướng
+              <div onClick={() => navigate('/promotion')} style={{ cursor: 'pointer' }}>
+                <MoneyCollectOutlined style={{ fontSize: '30px', color: '#fff' }} />
+                <WrapperTextHeaderSmall>Xem thông tin khuyến mãi</WrapperTextHeaderSmall>
+              </div>
+            )}
+          </span>
+
         </Col>
       </WrapperHeader>
       <ModalWrapper showModal={showModal} modalMessage={modalMessage} closeModal={closeModal} />

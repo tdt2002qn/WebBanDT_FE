@@ -2,21 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import socket from '../../services/socket';
-import { useSelector } from 'react-redux'
-
-
-// Điều chỉnh URL tương ứng với server của bạn
+import { useSelector } from 'react-redux';
 
 // Styled components
 const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 8000px;
- 
-  width: 700px;
+  height: 100%;
+  max-width: 700px;
+  margin: 20px auto;
   border: 1px solid #ccc;
-  margin: 20px;
-  overflow-y: scroll;
+  border-radius: 8px;
+  overflow: hidden;
 `;
 
 const Message = styled.div`
@@ -37,11 +34,13 @@ const InputContainer = styled.div`
 const InputBox = styled.input`
   flex: 1;
   padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
 `;
 
 const SendButton = styled.button`
-  margin-left: 10px;
-  padding: 8px;
+  padding: 8px 16px;
   background-color: #4caf50;
   color: white;
   border: none;
@@ -52,23 +51,13 @@ const SendButton = styled.button`
 const ChatComponent = () => {
   const user = useSelector((state) => state.user);
   const [messages, setMessages] = useState([]);
-
   const [input, setInput] = useState('');
 
   useEffect(() => {
-    // Lắng nghe sự kiện khi có tin nhắn mới từ server
     socket.on('chat message', (msg) => {
-      setMessages(prevMessages => {
-        const newMessages = [...prevMessages, msg];
-        //console.log('messages', newMessages, msg);
-        return newMessages;
-      });
+      setMessages(prevMessages => [...prevMessages, msg]);
     });
-
-    // Ngắt kết nối khi component unmount
-
-  }, []); // Dependency array trống, chỉ chạy khi component mount/unmount
-
+  }, []);
 
   const sendMessage = () => {
     socket.emit('chat message', { text: input, sender: user?.email });
@@ -79,9 +68,7 @@ const ChatComponent = () => {
     <ChatContainer>
       {messages.map((msg, index) => (
         <Message key={index} sender={msg.sender}>
-
-          User:  {msg.sender} <br />
-          Nội dung: {msg.text}
+          <strong>{msg.sender}:</strong> {msg.text}
         </Message>
       ))}
       <InputContainer>
@@ -89,6 +76,7 @@ const ChatComponent = () => {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          placeholder="Type your message here"
         />
         <SendButton onClick={sendMessage}>
           Send

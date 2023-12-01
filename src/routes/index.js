@@ -2,6 +2,8 @@ import AdminPage from "../pages/AdminPage/AdminPage";
 import ChatPage from "../pages/ChatPage/ChatPage";
 import DetailsOrderPage from "../pages/DetailsOrderPage/DetailsOrderPage";
 import HomePage from "../pages/HomePage/HomePage";
+import PostNews from "../pages/KhuyenmaiPage/PostNews";
+import Promotion from "../pages/KhuyenmaiPage/Promotion";
 import MyOrderPage from "../pages/MyOrder/MyOrder";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import OrderPage from "../pages/OrderPage/OrderPage";
@@ -84,6 +86,16 @@ export const routes = [
     {
         path: '/chatpage',
         page: ChatPage,
+        isShowHeader: true
+    },
+    {
+        path: '/postnews',
+        page: PostNews,
+        isShowHeader: true
+    },
+    {
+        path: '/promotion',
+        page: Promotion,
         isShowHeader: true
     },
     {

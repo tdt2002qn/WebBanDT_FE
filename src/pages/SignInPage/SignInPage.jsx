@@ -45,7 +45,7 @@ const SignInPage = () => {
         } else {
           navigate('/', { state: { loginSuccess: true } });
         }
-      }, 3000);
+      }, 2000);
       localStorage.setItem('access_token', JSON.stringify(data?.access_token))
       localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token))
       if (data?.access_token) {
@@ -160,8 +160,7 @@ const SignInPage = () => {
               styleTextButton={{ color: '#fff', fontSize: '15px', fontWeight: '700' }}
             ></ButtonComponent>
           </Loading>
-          {/* Container để hiển thị thông báo */}
-          {showModal && <CustomModal message={modalMessage} onClose={closeModal} />}
+
           <p><WrapperTextLight>Quên mật khẩu?</WrapperTextLight></p>
           <p>Chưa có tài khoản? <WrapperTextLight onClick={handleNavigateSignUp}> Tạo tài khoản</WrapperTextLight></p>
         </WrapperContainerLeft>
@@ -170,6 +169,8 @@ const SignInPage = () => {
           <h4>Mua sắm tại LTTD</h4>
         </WrapperContainerRight>
       </div>
+      {/* Container để hiển thị thông báo */}
+      {showModal && <CustomModal message={modalMessage} />}
     </div >
   )
 }
