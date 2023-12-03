@@ -97,11 +97,7 @@ const SignInPage = () => {
   const handleSignIn = () => {
     console.log(email)
     socket.emit('login', { email });
-    // // Lắng nghe sự kiện đăng nhập thành công từ server
-    // socket.on('login_success', (data) => {
-    //   console.log(data.message); // Log hoặc thực hiện hành động cần thiết
-    // });
-    // toast.success(data.message);
+
     mutation.mutate({
       email,
       password
@@ -164,13 +160,13 @@ const SignInPage = () => {
           <p><WrapperTextLight>Quên mật khẩu?</WrapperTextLight></p>
           <p>Chưa có tài khoản? <WrapperTextLight onClick={handleNavigateSignUp}> Tạo tài khoản</WrapperTextLight></p>
         </WrapperContainerLeft>
-        <WrapperContainerRight>
+        {/* <WrapperContainerRight>
           <Image src={imageLogo} preview={false} alt="iamge-logo" height="203px" width="203px" />
           <h4>Mua sắm tại LTTD</h4>
-        </WrapperContainerRight>
+        </WrapperContainerRight> */}
       </div>
       {/* Container để hiển thị thông báo */}
-      {showModal && <CustomModal message={modalMessage} />}
+      {showModal && <CustomModal message={`${email} ${modalMessage}`} />}
     </div >
   )
 }

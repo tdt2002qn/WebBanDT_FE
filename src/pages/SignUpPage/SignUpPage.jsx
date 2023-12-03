@@ -125,10 +125,10 @@ const SignUpPage = () => {
           </Loading>
           <p>Bạn đã có tài khoản? <WrapperTextLight onClick={handleNavigateSignIn}> Đăng nhập</WrapperTextLight></p>
         </WrapperContainerLeft>
-        <WrapperContainerRight>
+        {/* <WrapperContainerRight>
           <Image src={imageLogo} preview={false} alt="iamge-logo" height="203px" width="203px" />
           <h4>Mua sắm tại LTTD</h4>
-        </WrapperContainerRight>
+        </WrapperContainerRight> */}
       </div>
     </div >
   )

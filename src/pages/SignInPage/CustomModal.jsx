@@ -44,7 +44,6 @@ const CustomModal = ({ message, onClose }) => {
   return (
     <ModalWrapper>
       <p>{message}</p>
-      <button onClick={onClose}>Close</button>
     </ModalWrapper>
   );
 };

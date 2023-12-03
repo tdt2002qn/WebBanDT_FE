@@ -53,14 +53,15 @@ const ChatComponent = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
 
+
   useEffect(() => {
     socket.on('chat message', (msg) => {
       setMessages(prevMessages => [...prevMessages, msg]);
     });
   }, []);
-
+  const senderName = user?.name || user?.email;
   const sendMessage = () => {
-    socket.emit('chat message', { text: input, sender: user?.email });
+    socket.emit('chat message', { text: input, sender: senderName });
     setInput('');
   };
 

@@ -1,5 +1,6 @@
 import AdminPage from "../pages/AdminPage/AdminPage";
 import ChatPage from "../pages/ChatPage/ChatPage";
+import ChatPageAdmin from "../pages/ChatPage/ChatPageAdmin";
 import DetailsOrderPage from "../pages/DetailsOrderPage/DetailsOrderPage";
 import HomePage from "../pages/HomePage/HomePage";
 import PostNews from "../pages/KhuyenmaiPage/PostNews";
@@ -60,12 +61,12 @@ export const routes = [
     {
         path: '/sign-in',
         page: SignInPage,
-        isShowHeader: false
+        isShowHeader: true
     },
     {
         path: '/sign-up',
         page: SignUpPage,
-        isShowHeader: false
+        isShowHeader: true
     },
     {
         path: '/product-details/:id',
@@ -86,6 +87,11 @@ export const routes = [
     {
         path: '/chatpage',
         page: ChatPage,
+        isShowHeader: true
+    },
+    {
+        path: '/chatpageadmin',
+        page: ChatPageAdmin,
         isShowHeader: true
     },
     {

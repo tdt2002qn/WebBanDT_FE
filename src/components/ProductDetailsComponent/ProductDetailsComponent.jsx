@@ -47,6 +47,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
         initFacebookSDK()
     }, [])
 
+
     useEffect(() => {
         const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id)
         if ((orderRedux?.amount + numProduct) <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
