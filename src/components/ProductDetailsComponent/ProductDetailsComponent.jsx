@@ -43,9 +43,9 @@ const ProductDetailsComponent = ({ idProduct }) => {
             return res.data
         }
     }
-    useEffect(() => {
-        initFacebookSDK()
-    }, [])
+    // useEffect(() => {
+    //     initFacebookSDK()
+    // }, [])
 
 
     useEffect(() => {
@@ -114,33 +114,21 @@ const ProductDetailsComponent = ({ idProduct }) => {
     }
     useEffect(() => {
         socket.emit('joinRoom', idProduct);
-
-        // Other useEffect cleanup...
-
     }, [idProduct]);
-
     useEffect(() => {
         socket.on('commentHistory', (history) => {
             setReviews(history);
-
         });
-        // Ngừng lắng nghe khi component unmount
-
-    }, []); // [] đảm bảo chỉ thực hiện một lần sau khi component được render
-
-    // Sử dụng useEffect để lắng nghe sự kiện khi có đánh giá mới từ server
+    }, []);
     useEffect(() => {
         socket.on('newReview', (newReview) => {
             setReviews([...reviews, newReview]);
         });
-
-    }, [reviews]); // Lắng nghe lại khi reviews thay đổi
-
+    }, [reviews]);
     const addReview = (content, rating) => {
         // Gửi đánh giá mới tới server
         socket.emit('addReview', { content, rating: rating, user: user?.email, productId: idProduct });
     };
-
     return (
         <div>
             <Loading isLoading={isLoading}>
@@ -184,8 +172,8 @@ const ProductDetailsComponent = ({ idProduct }) => {
                         </WrapperPriceProduct>
                         <WrapperAddressProduct>
                             <span>Giao đến </span>
-                            <span className='address'>{user?.address}</span> -
-                            <span className='change-address'>Đổi địa chỉ</span>
+                            <span className='address'>{user?.address}</span>
+                            {/* <span className='change-address'>Đổi địa chỉ</span> */}
                         </WrapperAddressProduct>
                         <LikeButtonComponent
                             dataHref={process.env.REACT_APP_IS_LOCAL
@@ -236,13 +224,13 @@ const ProductDetailsComponent = ({ idProduct }) => {
                             ></ButtonComponent>
                         </div>
                     </Col>
-                    <CommentComponent
+                    {/* <CommentComponent
                         dataHref={process.env.REACT_APP_IS_LOCAL
                             ? "https://developers.facebook.com/docs/plugins/comments#configurator"
                             : window.location.href
                         }
                         width="1270"
-                    />
+                    /> */}
                 </Row >
 
             </Loading>

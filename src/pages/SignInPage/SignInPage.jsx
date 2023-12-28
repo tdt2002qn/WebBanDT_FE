@@ -64,14 +64,9 @@ const SignInPage = () => {
     // Lắng nghe sự kiện đăng nhập thành công từ server
     socket.on('login_success', (data) => {
       console.log('OKKKK', data?.message); // Log hoặc thực hiện hành động cần thiết
-
       // Show the modal with the success message
       setModalMessage(data?.message || 'Login successful');
-
     });
-
-    // Clean up socket event listener when component unmounts
-
   }, []);
 
   const handleGetDetailsUser = async (id, token) => {
@@ -95,7 +90,7 @@ const SignInPage = () => {
   }
 
   const handleSignIn = () => {
-    console.log(email)
+
     socket.emit('login', { email });
 
     mutation.mutate({

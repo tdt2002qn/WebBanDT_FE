@@ -58,10 +58,8 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   useEffect(() => {
     // Lắng nghe sự kiện đăng xuat thành công từ server
     socket.on('logout_success', (data) => {
-      console.log('BYE OKKK', data?.message); // Log hoặc thực hiện hành động cần thiết
       // Show the modal with the success message
       setModalMessage(data?.message || 'Logout successful');
-
     });
 
     // Clean up socket event listener when component unmounts
@@ -96,7 +94,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
       })
     } else {
       setShowModal(true);
-      console.log("Gui đăng xuat cho sever ne")
+     //"Gui sự kiện đăng xuat cho sever 
       socket.emit('logout', { email });
 
       {/* Container để hiển thị thông báo */ }

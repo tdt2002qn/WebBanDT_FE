@@ -55,12 +55,8 @@ const PostNews = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     // Gửi dữ liệu tới server thông qua Socket.IO
     socket.emit('postNews', { title, content });
-
-    // Làm bất kỳ xử lý nào khác sau khi gửi tin tức
-
     // Xóa nội dung trường sau khi đăng tin
     setTitle('');
     setContent('');

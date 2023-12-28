@@ -43,7 +43,7 @@ const CustomModal = ({ message, onClose }) => {
 
   return (
     <ModalWrapper>
-      <p>{message}</p>
+      <p> {message}</p>
     </ModalWrapper>
   );
 };

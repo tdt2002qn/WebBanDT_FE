@@ -68,11 +68,6 @@ const Promotion = () => {
     socket.on('newsHistory', (history) => {
       setNewsHistory(history);
     });
-
-    // return () => {
-    //   // Xóa lắng nghe khi component unmount
-    //   socket.off('newsHistory');
-    // };
   }, []);
 
   return (
