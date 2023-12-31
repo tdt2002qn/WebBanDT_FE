@@ -94,7 +94,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
       })
     } else {
       setShowModal(true);
-     //"Gui sự kiện đăng xuat cho sever 
+      //"Gui sự kiện đăng xuat cho sever 
       socket.emit('logout', { email });
 
       {/* Container để hiển thị thông báo */ }
@@ -118,7 +118,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
       <WrapperHeader style={{ justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset' }}>
         <Col span={5}>
-          <WrapperTextHeader to='/'>Trang chủ</WrapperTextHeader>
+          <WrapperTextHeader to='/'>Trang home</WrapperTextHeader>
         </Col>
 
         {!isHiddenSearch && (
